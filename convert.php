@@ -41,4 +41,4 @@ function check_convert($output){
     endif;
 }
 
-convert_format($path, 'pdf');
+convert_format($path, 'epub');

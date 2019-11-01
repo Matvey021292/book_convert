@@ -41,7 +41,26 @@ function get_data_from_resource($path){
     foreach($data as $key => $value){
         $data[$key] = (string) $package->metadata->children('dc', true)->$key;
     }
-    print_r($data);
+    return $data;
+}
+
+function get_file_content($path){
+    $file = convert_format($path);
+    $page = $file . '/index.xhtml';
+    if(!file_exists($page)) return;
+    cp_resource($file);
+    return file_get_contents($page);
+}
+
+function cp_resource($path){
+    $files = array_diff(scandir($path), ['.','..']);
+    foreach ($files as $key => $file) {
+       if(exif_imagetype($path . '/' . $file)){
+           echo $path .'/'. $file;
+           break;
+       }
+    }
 }
 
 get_data_from_resource($path);
+get_file_content($path);
